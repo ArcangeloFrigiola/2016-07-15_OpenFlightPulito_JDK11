@@ -32,12 +32,57 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	
+    	this.txtResult.clear();
+    	
+    	try {
+    		
+    		double chilometri;
+    		try {
+    			
+    			chilometri = Double.parseDouble(this.txtDistanzaInput.getText());
+    			this.model.creaGrafo(chilometri);
+    			this.txtResult.appendText("Grafo creato!\n# vertici: "+this.model.getNvertici()+"\n# archi: "+this.model.getNarchi());
+    			this.txtResult.appendText("\n"+this.model.cercaRaggiungibilita());
+    			
+    		}catch(NumberFormatException nfe) {
+    			
+    			this.txtResult.appendText("ERRORE! Inserire solo valori numerici (es. 800, 600, ...)");
+    			return;
+    		}
+    		
+    	}catch(Exception e) {
+    		
+    		this.txtResult.appendText("ERRORE nella creazione del grafo!");
+    		e.printStackTrace();
+			return;
+    	}
     }
 
     @FXML
     void doSimula(ActionEvent event) {
+    	
+    	this.txtResult.clear();
+    	try {
+    		
+    		int passeggeri;
+    		
+			try {
 
+				passeggeri = Integer.parseInt(this.txtPasseggeriInput.getText());
+				this.txtResult.appendText(this.model.simulazione(passeggeri));
+
+			} catch (NumberFormatException nfe) {
+
+				this.txtResult.appendText("ERRORE! Inserire solo valori numerici (es. 800, 600, ...)");
+				return;
+			}
+    		
+    	}catch(Exception e) {
+    		this.txtResult.appendText("ERRORE nella simulazione!");
+    		e.printStackTrace();
+			return;
+    	}
     }
 
     @FXML
